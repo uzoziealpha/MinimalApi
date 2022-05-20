@@ -16,6 +16,13 @@ app.MapGet("/shoppinglist", async (ApiDbContext db) =>
     await db.Groceries.ToListAsync());
 
 
+app.MapGet("/shoppinglist/{id}", async (int id, ApiDbContext db) =>
+{
+    var grocery = db.Groceries.FindAsync(id);
+
+    return grocery != null ? Results.Ok(grocery) : Results.NotFound();
+});
+
 
 app.MapPost("/shoppinglist", async (Grocery grocery, ApiDbContext db) =>
 {
